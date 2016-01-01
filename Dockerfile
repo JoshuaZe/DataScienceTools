@@ -1,8 +1,11 @@
 # ----------------------------------------------------------------------
 # Dockerfile for installing most commonly use languages / packages 
-# for DataScience 
-# To be used with a Spark pre-built binary 
-# ----------------------------------------------------------------------
+# for Data Science 
+#
+# Not maintained, just for understanding how docker works
+# Use Dockerfile at https://github.com/jupyter/docker-stacks instead!
+# License: BSD 3-clause
+# # ----------------------------------------------------------------------
 
 FROM ubuntu:14.04
 MAINTAINER Karen Ng <karen.yyng@gmail.com>
@@ -25,7 +28,7 @@ RUN apt install -y r-base r-base-dev
 RUN echo "\n\n---------- Finished building R --------------------------- \n\n"
 
 # ----- Python 3.4 is installed by default ----------------------------
-RUN echo "---------- Downloading and building Python 3 packages ------------ "
+RUN echo "\n\n---------- Downloading and building Python 3 packages -------\n\n"
 # All essential Python debugger, installation utilities 
 RUN apt install -y python3-ipdb python3-pip python3-pytest python3-dev
 # Install all the Python Data Science packages 
@@ -33,9 +36,12 @@ RUN apt install -y python3-matplotlib python3-pandas python3-h5py
 RUN pip3 install sklearn 
 RUN pip3 install bokeh 
 RUN pip3 install jupyter 
+# Expose port for jupyter notebook
+# Should change 8888 to something else for security reasons 
+EXPOSE 8888   
 RUN echo "\n\n---------- Finished building Python 3 -------------------- \n\n"
 
-RUN echo "---------- Downloading and building Java 7 packages ------------ "
+RUN echo "\n\n---------- Downloading and building Java 7 packages---------\n\n"
 RUN apt install -y python-software-properties
 RUN add-apt-repository -y ppa:webupd8team/java
 RUN apt update
@@ -46,9 +52,10 @@ RUN apt install -y oracle-java7-installer
 RUN apt install libjansi-java libjansi-native-java libhawtjni-runtime-java
 RUN echo "\n\n---------- Finished building Java 7 -------------------- \n\n"
 
-RUN echo "---------- Downloading and building Scala 2.10 packages ------------ "
+RUN echo "\n\n---------- Downloading and building Scala 2.10 packages-----\n\n "
 RUN wget www.scala-lang.org/files/archive/scala-2.10.4.deb
 RUN dpkg -i scala-2.10.4.deb
 RUN rm scala-2.10.4.deb
 RUN echo "\n\n---------- Finished building Scala 2.10 -------------------- \n\n"
+
 
